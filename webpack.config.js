@@ -106,8 +106,27 @@ module.exports = {
     // inside the output.path directory.
     //
     // See: http://webpack.github.io/docs/configuration.html#output-chunkfilename
-    chunkFilename: '[id].chunk.js'
+    chunkFilename: '[id].chunk.js',
 
+    // Filename template string of function for the sources
+    // array in a generated SourceMap.
+    //
+    // See: http://webpack.github.io/docs/configuration.html#output-devtoolmodulefilenametemplate
+    devtoolModuleFilenameTemplate: function (info) {
+      var resourcePath = info.absoluteResourcePath;
+      if (resourcePath.indexOf(__dirname) !== 0) {
+        // Normalize resouce path if it is not an absolute path
+        // (e.g. 'node_modules/rxjs/Observable.js')
+        resourcePath = helpers.root(resourcePath);
+      }
+      if (resourcePath.charAt(0) === '/') {
+        // Mac OS X absolute path has a leading slash already
+        // https://github.com/Microsoft/vscode-chrome-debug/issues/63#issuecomment-163524778
+        return 'file://' + resourcePath;
+      } else {
+        return 'file:///' + resourcePath;
+      }
+    }
   },
 
   // Options affecting the normal modules.
