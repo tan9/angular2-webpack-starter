@@ -48,7 +48,8 @@ module.exports = {
   //
   // See: http://webpack.github.io/docs/configuration.html#devtool
   // See: https://github.com/webpack/docs/wiki/build-performance#sourcemaps
-  devtool: 'cheap-module-eval-source-map',
+  // Note: Changed from 'eval' to 'inline' for Visual Studio Code Debugger
+  devtool: 'cheap-module-inline-source-map',
 
   // Cache generated modules and chunks to improve performance for multiple incremental builds.
   // This is enabled by default in watch mode.
