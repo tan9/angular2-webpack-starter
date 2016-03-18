@@ -11,6 +11,7 @@ var helpers = require('./helpers');
 var CopyWebpackPlugin = require('copy-webpack-plugin');
 var HtmlWebpackPlugin = require('html-webpack-plugin');
 var ForkCheckerPlugin = require('awesome-typescript-loader').ForkCheckerPlugin;
+var WriteFilePlugin = require('write-file-webpack-plugin');
 
 /**
  * Webpack Constants
@@ -237,8 +238,17 @@ module.exports = {
     //
     // See: https://webpack.github.io/docs/list-of-plugins.html#defineplugin
     // NOTE: when adding more properties make sure you include them in custom-typings.d.ts
-    new webpack.DefinePlugin({'ENV': JSON.stringify(METADATA.ENV), 'HMR': HMR})
+    new webpack.DefinePlugin({'ENV': JSON.stringify(METADATA.ENV), 'HMR': HMR}),
 
+    // Plugin: Write File Plugin
+    // Description: Write bundle files for debugging.
+    // Forces webpack-dev-server program to write bundle files to the file system.
+    //
+    // For use in conjuction with Visual Code debugger.
+    //
+    // See: https://github.com/AngularClass/angular2-webpack-starter/issues/297#issuecomment-193989148
+    // See: https://github.com/gajus/write-file-webpack-plugin
+    new WriteFilePlugin()
   ],
 
   // Static analysis linter for TypeScript advanced options configuration
@@ -264,7 +274,8 @@ module.exports = {
     watchOptions: {
       aggregateTimeout: 300,
       poll: 1000
-    }
+    },
+    outputPath: helpers.root('dist')
   },
 
   // Include polyfills or mocks for various node stuff
