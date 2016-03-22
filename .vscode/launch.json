@@ -8,7 +8,8 @@
       "url": "http://localhost:3000/",
       "sourceMaps": true,
       "diagnosticLogging": true,
-      "webRoot": "${workspaceRoot}/dist"
+      "webRoot": "${workspaceRoot}/dist",
+      "userDataDir": "${workspaceRoot}/.vscode/chrome"
     },
     {
       "name": "Attach Chrome",
